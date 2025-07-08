@@ -1,0 +1,65 @@
+# Build results
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Mono Auto Generated Files
+mono_crash.*
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Azure Web Apps publish settings
+PublishProfiles/
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+
+# ASP.NET Core secrets
+**/secrets.json
+
+# User-specific files and folders
+*.swp
+*.bak
+*.tmp
+*.log
+*.vspscc
+*.vssscc
+.vs/
+
+# JetBrains Rider
+*.sln.iml
+
+# NuGet packages
+*.nupkg
+**/packages/*
+!**/packages/build/
+!**/packages/repositories.config
+
+# Npm & node modules (if using frontend with WebAPI)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment files
+.env
+.env.*
+
+# Dotnet tools
+.tool/
+
+# Logs
+*.log
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
