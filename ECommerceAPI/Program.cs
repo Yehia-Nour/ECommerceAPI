@@ -1,5 +1,8 @@
 
 using ECommerceAPI.Data;
+using ECommerceAPI.Repositories.Implementations;
+using ECommerceAPI.Repositories.Interfaces;
+using ECommerceAPI.UoW;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceAPI
@@ -22,6 +25,9 @@ namespace ECommerceAPI
             // Configure EF Core with SQL Server
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("EFCoreDBConnection")));
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
