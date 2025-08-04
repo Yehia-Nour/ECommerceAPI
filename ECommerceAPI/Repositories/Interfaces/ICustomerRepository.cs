@@ -2,7 +2,9 @@
 
 namespace ECommerceAPI.Repositories.Interfaces
 {
-    public interface ICustomerRepository : IGenericRepository<Customer>
+    public interface ICustomerRepository : IBaseRepository<Customer>
     {
+        Task<bool> CustomerExistsByEmailAsync(string email);
+        
     }
 }

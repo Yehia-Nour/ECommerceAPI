@@ -1,13 +1,25 @@
 ﻿using ECommerceAPI.Data;
 using ECommerceAPI.Models;
 using ECommerceAPI.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace ECommerceAPI.Repositories.Implementations
 {
-    public class CustomerRepository : GenericRepository<Customer>, ICustomerRepository
+    public class CustomerRepository : BaseRepository<Customer>, ICustomerRepository
     {
-        public CustomerRepository(ApplicationDbContext context) : base(context) { }
-        
+        private readonly ApplicationDbContext _context;
+
+        protected readonly DbSet<Customer> _dbSet;
+        public CustomerRepository(ApplicationDbContext context) : base(context) {
+            _context = context;
+            _dbSet = _context.Set<Customer>();
+        }
+
+        public async Task<bool> CustomerExistsByEmailAsync(string email)
+        {
+            return await _dbSet.AnyAsync(c => c.Email.ToLower() == email.ToLower());
+        }
+
     }
 }
