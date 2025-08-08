@@ -7,6 +7,6 @@ namespace ECommerceAPI.Services.Interfaces
     {
         Task<ApiResponse<string>> RegisterAsync(CustomerRegistrationDTO customerDto);
         Task<ApiResponse<string>> LoginAsync(LoginDTO loginDto);
-        Task<bool> ChangePasswordAsync(ChangePasswordDTO changePasswordDto);
+        Task<ApiResponse<ConfirmationResponseDTO>> ChangePasswordAsync(ChangePasswordDTO changePasswordDto);
     }
 }

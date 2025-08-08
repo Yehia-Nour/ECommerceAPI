@@ -24,6 +24,14 @@
             Errors = new List<string>();
         }
 
+        public ApiResponse(int statusCode, T data, bool isSucces = true)
+        {
+            StatusCode = statusCode;
+            Success = true;
+            Data = data;
+            Errors = new List<string>();
+        }
+
         public ApiResponse(int statusCode, List<string> errors)
         {
             StatusCode = statusCode;
@@ -37,5 +45,6 @@
             Success = false;
             Errors = new List<string> { error };
         }
+
     }
 }

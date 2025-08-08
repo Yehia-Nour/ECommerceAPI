@@ -17,22 +17,46 @@ namespace ECommerceAPI.Services.Implementations
 
         public async Task<ApiResponse<string>> RegisterAsync(CustomerRegistrationDTO customerDto)
         {
-            if (await _customerService.CheckCustomerExistsByEmailAsync(customerDto.CustomerEmail))
+            var customer = await _customerService.GetCustomerByEmailAsync(customerDto.CustomerEmail);
+            if (customer is not null)
                 return new ApiResponse<string>(400, "Email already exists.");
-            var customer = await _customerService.CreateCustomerAsync(customerDto);
+            customer = await _customerService.CreateCustomerAsync(customerDto);
             var token = _jwtService.GenerateToken(customer);
 
-            return new ApiResponse<string>(200, token);
+            return new ApiResponse<string>(200, token, true);
         }
 
-        public Task<ApiResponse<string>> LoginAsync(LoginDTO loginDto)
+        public async Task<ApiResponse<string>> LoginAsync(LoginDTO loginDto)
         {
-            throw new NotImplementedException();
+            var customer = await _customerService.GetCustomerByEmailAsync(loginDto.Email);
+            if (customer is null)
+                return new ApiResponse<string>(401, "Invalid email or password.");
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(loginDto.Password, customer.Password);
+            if (!isPasswordValid)
+                return new ApiResponse<string>(401, "Invalid email or password.");
+
+            var token = _jwtService.GenerateToken(customer);
+
+            return new ApiResponse<string>(200, token, true);
         }
 
-        public Task<bool> ChangePasswordAsync(ChangePasswordDTO changePasswordDto)
+        public async Task<ApiResponse<ConfirmationResponseDTO>> ChangePasswordAsync(ChangePasswordDTO changePasswordDto)
         {
-            throw new NotImplementedException();
+            var customer = await _customerService.GetCustomerByEmailAsync(changePasswordDto.CustomerEmail);
+            if (customer is null || !customer.IsActive)
+                return new ApiResponse<ConfirmationResponseDTO>(404, "Customer not found or inactive.");
+
+
+            bool isCurrentPasswordValid = BCrypt.Net.BCrypt.Verify(changePasswordDto.CurrentPassword, customer.Password);
+            if (!isCurrentPasswordValid)
+                return new ApiResponse<ConfirmationResponseDTO>(401, "Current password is incorrect.");
+
+            await _customerService.UpdateCustomerPasswordAsync(customer, changePasswordDto.NewPassword);
+            var confirmationMessage = new ConfirmationResponseDTO
+            {
+                Message = "Password changed successfully."
+            };
+            return new ApiResponse<ConfirmationResponseDTO>(200, confirmationMessage, true);
         }
     }
 }

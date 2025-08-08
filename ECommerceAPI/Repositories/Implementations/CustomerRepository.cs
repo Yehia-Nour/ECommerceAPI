@@ -11,14 +11,16 @@ namespace ECommerceAPI.Repositories.Implementations
         private readonly ApplicationDbContext _context;
 
         protected readonly DbSet<Customer> _dbSet;
-        public CustomerRepository(ApplicationDbContext context) : base(context) {
+        public CustomerRepository(ApplicationDbContext context) : base(context)
+        {
             _context = context;
             _dbSet = _context.Set<Customer>();
         }
 
-        public async Task<bool> CustomerExistsByEmailAsync(string email)
+        public async Task<Customer?> GetCustomerByEmailAsync(string email)
         {
-            return await _dbSet.AnyAsync(c => c.Email.ToLower() == email.ToLower());
+            return await _dbSet.AsNoTracking()
+                    .FirstOrDefaultAsync(c => c.Email == email);
         }
 
     }
