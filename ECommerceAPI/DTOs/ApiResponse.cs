@@ -24,10 +24,10 @@
             Errors = new List<string>();
         }
 
-        public ApiResponse(int statusCode, T data, bool isSucces = true)
+        public ApiResponse(int statusCode, T data, bool isSuccess = true)
         {
             StatusCode = statusCode;
-            Success = true;
+            Success = isSuccess;
             Data = data;
             Errors = new List<string>();
         }

@@ -1,12 +1,14 @@
-﻿namespace ECommerceAPI.DTOs.CustomerDTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ECommerceAPI.DTOs.CustomerDTOs
 {
     public class CustomerResponseDTO
     {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public int CustomerId { get; set; }
+        public string CustomerFirstName { get; set; }
+        public string CustomerLastName { get; set; }
+        public string CustomerEmail { get; set; }
+        public string CustomerPhoneNumber { get; set; }
+        public DateTime CustomerBirthDate { get; set; }
     }
 }

@@ -18,15 +18,15 @@ namespace ECommerceAPI.Services.Implementations
             _mapper = mapper;
         }
 
-        public async Task<Customer?> GetCustomerByEmailAsync(string email)
+        public async Task<ApiResponse<CustomerResponseDTO>> GetCustomerByIdAsync(int id)
         {
-            return await _unitOfWork.Customers.GetCustomerByEmailAsync(email);
-        }
+            var customer = await _unitOfWork.Customers.GetByIdAsync(id);
+            if (customer is null || !customer.IsActive)
+                return new ApiResponse<CustomerResponseDTO>(404, "Customer not found or inactive.");
 
-        public Task<ApiResponse<CustomerResponseDTO>> GetCustomerByIdAsync(int id)
-        {
+            var customerResponse = _mapper.Map<CustomerResponseDTO>(customer);
 
-            throw new NotImplementedException();
+            return new ApiResponse<CustomerResponseDTO>(200, customerResponse, true);
         }
 
         public async Task<Customer> CreateCustomerAsync(CustomerRegistrationDTO customerDto)
@@ -41,19 +41,49 @@ namespace ECommerceAPI.Services.Implementations
         }
 
 
-        public Task<ApiResponse<ConfirmationResponseDTO>> UpdateCustomerAsync(CustomerUpdateDTO customerDto)
+        public async Task<ApiResponse<ConfirmationResponseDTO>> UpdateCustomerAsync(CustomerUpdateDTO customerDto, int customerId)
         {
-            throw new NotImplementedException();
+            var customer = await _unitOfWork.Customers.GetByIdAsync(customerId);
+            if (customer is null || !customer.IsActive)
+                return new ApiResponse<ConfirmationResponseDTO>(404, "Customer not found or inactive.");
+
+            _mapper.Map(customerDto, customer);
+
+            _unitOfWork.Customers.Update(customer);
+            await _unitOfWork.SaveChangesAsync();
+
+            var confirmationMessage = new ConfirmationResponseDTO
+            {
+                Message = $"Customer with Id {customerId} updated successfully."
+            };
+            return new ApiResponse<ConfirmationResponseDTO>(200, confirmationMessage);
         }
 
-        public Task<ApiResponse<ConfirmationResponseDTO>> DeleteCustomerAsync(int id)
+        public async Task<ApiResponse<ConfirmationResponseDTO>> DeleteCustomerAsync(int customerId)
         {
-            throw new NotImplementedException();
+            var customer = await _unitOfWork.Customers.GetByIdAsync(customerId);
+            if (customer is null || !customer.IsActive)
+                return new ApiResponse<ConfirmationResponseDTO>(404, "Customer not found or inactive.");
+
+            customer.IsActive = false;
+            await _unitOfWork.SaveChangesAsync();
+
+            var confirmationMessage = new ConfirmationResponseDTO
+            {
+                Message = $"Customer with Id {customerId} deleted successfully."
+            };
+            return new ApiResponse<ConfirmationResponseDTO>(200, confirmationMessage);
+        }
+
+        public async Task<Customer?> GetCustomerByEmailAsync(string email)
+        {
+            return await _unitOfWork.Customers.GetCustomerByEmailAsync(email);
         }
 
         public async Task UpdateCustomerPasswordAsync(Customer customer, string hashedNewPassword)
         {
             customer.Password = BCrypt.Net.BCrypt.HashPassword(hashedNewPassword);
+            _unitOfWork.Customers.Update(customer);
             await _unitOfWork.SaveChangesAsync();
         }
     }

@@ -31,6 +31,9 @@ namespace ECommerceAPI.Services.Implementations
             var customer = await _customerService.GetCustomerByEmailAsync(loginDto.Email);
             if (customer is null)
                 return new ApiResponse<string>(401, "Invalid email or password.");
+            if (!customer.IsActive)
+                return new ApiResponse<string>(403, "Account is deactivated.");
+
             bool isPasswordValid = BCrypt.Net.BCrypt.Verify(loginDto.Password, customer.Password);
             if (!isPasswordValid)
                 return new ApiResponse<string>(401, "Invalid email or password.");

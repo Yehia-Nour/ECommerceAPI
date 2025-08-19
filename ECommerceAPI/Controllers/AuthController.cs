@@ -44,22 +44,16 @@ namespace ECommerceAPI.Controllers
         public async Task<ActionResult<ApiResponse<string>>> Login([FromBody] LoginDTO loginDto)
         {
             var response = await _authService.LoginAsync(loginDto);
-            if (!response.Success)
-            {
-                return StatusCode(response.StatusCode, response);
-            }
-            return Ok(response);
+
+            return StatusCode(response.StatusCode, response);
         }
 
         [HttpPost("ChangePassword")]
         public async Task<ActionResult<ApiResponse<ConfirmationResponseDTO>>> ChangePassword([FromBody] ChangePasswordDTO changePasswordDto)
         {
             var response = await _authService.ChangePasswordAsync(changePasswordDto);
-            if (!response.Success)
-            {
-                return StatusCode(response.StatusCode, response);
-            }
-            return Ok(response);
+
+            return StatusCode(response.StatusCode, response);
         }
 
     }
