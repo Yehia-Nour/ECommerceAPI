@@ -6,6 +6,8 @@ using ECommerceAPI.Services.Implementations;
 using ECommerceAPI.Services.Interfaces;
 using ECommerceAPI.UoW;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
@@ -24,25 +26,39 @@ namespace ECommerceAPI
             var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]!);
 
             // Add services to the container.
-            builder.Services.AddControllers()
+            builder.Services.AddControllers(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            })
             .AddJsonOptions(options =>
             {
-                // This will use the property names as defined in the C# model
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
             });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            // Configure EF Core with SQL Server
+
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("EFCoreDBConnection")));
+
             builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-            builder.Services.AddScoped(typeof(IGetAllRepository<>), typeof(GetAllRepository<>));
+
             builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
+
+            builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+            builder.Services.AddScoped<IAddressService, AddressService>();
+
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             builder.Services.AddScoped<IAuthService, AuthService>();
+
             builder.Services.AddScoped<IJwtService, JwtService>();
+
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 

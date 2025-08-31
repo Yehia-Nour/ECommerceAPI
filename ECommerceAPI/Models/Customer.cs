@@ -28,7 +28,7 @@ namespace ECommerceAPI.Models
         [Required(ErrorMessage = "Password is required.")]
         public string Password { get; set; }
 
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
         public ICollection<Address> Addresses { get; set; }
 

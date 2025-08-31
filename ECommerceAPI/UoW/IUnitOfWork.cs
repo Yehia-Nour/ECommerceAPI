@@ -5,7 +5,8 @@ namespace ECommerceAPI.UoW
 {
     public interface IUnitOfWork
     {
-        public ICustomerRepository Customers { get; }
+        ICustomerRepository Customers { get; }
+        IAddressRepository Addresses { get; }
         Task<int> SaveChangesAsync();
     }
 }

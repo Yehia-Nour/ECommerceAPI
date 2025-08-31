@@ -2,6 +2,7 @@
 using ECommerceAPI.DTOs.CustomerDTOs;
 using ECommerceAPI.Services.Implementations;
 using ECommerceAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,7 @@ namespace ECommerceAPI.Controllers
 
 
         [HttpPost("register")]
+        [AllowAnonymous]
         public async Task<ActionResult> Register([FromBody] CustomerRegistrationDTO customerDto)
         {
             if (!ModelState.IsValid)
@@ -41,6 +43,7 @@ namespace ECommerceAPI.Controllers
         }
 
         [HttpPost("Login")]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResponse<string>>> Login([FromBody] LoginDTO loginDto)
         {
             var response = await _authService.LoginAsync(loginDto);

@@ -16,11 +16,6 @@ namespace ECommerceAPI.Repositories.Implementations
             _dbSet = _context.Set<T>();
         }
 
-        public IQueryable<T> GetAll()
-        {
-            return _dbSet.AsNoTracking();
-        }
-
         public async Task<T?> GetByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);
