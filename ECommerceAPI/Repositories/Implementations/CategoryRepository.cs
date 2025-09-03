@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceAPI.Repositories.Implementations
 {
-    public class CategoryRepository : BaseRepository<Category>, ICategoryRepository, IGetAllRepository<Category>
+    public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
     {
         public CategoryRepository(ApplicationDbContext context) : base(context)
         {
@@ -14,6 +14,11 @@ namespace ECommerceAPI.Repositories.Implementations
         public IQueryable<Category> GetAll()
         {
             return _dbSet.AsNoTracking();
+        }
+
+        public async Task<bool> ExistsByNameAsync(string name)
+        {
+            return await _dbSet.AnyAsync(c => c.IsActive && c.Name.ToLower() == name.ToLower());
         }
     }
 }

@@ -4,6 +4,7 @@ using ECommerceAPI.DTOs.AddressesDTOs;
 using ECommerceAPI.Models;
 using ECommerceAPI.Services.Interfaces;
 using ECommerceAPI.UoW;
+using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceAPI.Services.Implementations
 {
@@ -86,10 +87,10 @@ namespace ECommerceAPI.Services.Implementations
             if (customerResponse.Data == null || customerResponse.StatusCode != 200)
                 return new ApiResponse<List<AddressResponseDTO>>(404, "Customer not found.");
 
-            var addresses = _unitOfWork.Addresses
+            var addresses = await _unitOfWork.Addresses
                 .GetAll()
                 .Where(a => a.CustomerId == customerId)
-                .ToList();
+                .ToListAsync();
 
             var addressResponses = _mapper.Map<List<AddressResponseDTO>>(addresses);
 

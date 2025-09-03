@@ -17,6 +17,14 @@ namespace ECommerceAPI.Controllers
             _categoryService = categoryService;
         }
 
+        [HttpGet("GetAllCategories")]
+        public async Task<ActionResult<ApiResponse<List<CategoryResponseDTO>>>> GetAllCategories()
+        {
+            var response = await _categoryService.GetAllCategoriesAsync();
+
+            return StatusCode(response.StatusCode, response);
+        }
+
         [HttpPost("CreateCategory")]
         public async Task<ActionResult<ApiResponse<CategoryResponseDTO>>> CreateCategory([FromBody] CategoryCreateDTO categoryDto)
         {
@@ -42,14 +50,6 @@ namespace ECommerceAPI.Controllers
         public async Task<ActionResult<ApiResponse<ConfirmationResponseDTO>>> DeleteCategory(int id)
         {
             var response = await _categoryService.DeleteCategoryAsync(id);
-            return StatusCode(response.StatusCode, response);
-        }
-
-        [HttpGet("GetAllCategories")]
-        public async Task<ActionResult<ApiResponse<List<CategoryResponseDTO>>>> GetAllCategories()
-        {
-            var response = await _categoryService.GetAllCategoriesAsync();
-
             return StatusCode(response.StatusCode, response);
         }
     }

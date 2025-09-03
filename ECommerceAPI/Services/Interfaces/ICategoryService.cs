@@ -1,5 +1,6 @@
 ﻿using ECommerceAPI.DTOs;
 using ECommerceAPI.DTOs.CategoryDTOs;
+using ECommerceAPI.Models;
 
 namespace ECommerceAPI.Services.Interfaces
 {
