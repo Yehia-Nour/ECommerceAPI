@@ -7,6 +7,8 @@ namespace ECommerceAPI.UoW
     {
         ICustomerRepository Customers { get; }
         IAddressRepository Addresses { get; }
+        ICategoryRepository Categories { get; }
+
         Task<int> SaveChangesAsync();
     }
 }

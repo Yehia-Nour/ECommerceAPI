@@ -47,11 +47,11 @@ namespace ECommerceAPI
 
             builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
-            builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
 
-            builder.Services.AddScoped<IAddressRepository, AddressRepository>();
             builder.Services.AddScoped<IAddressService, AddressService>();
+
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 

@@ -5,16 +5,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceAPI.Repositories.Implementations
 {
-    public class AddressRepository : BaseRepository<Address>, IAddressRepository
+    public class CategoryRepository : BaseRepository<Category>, ICategoryRepository, IGetAllRepository<Category>
     {
-        public AddressRepository(ApplicationDbContext context) : base(context)
+        public CategoryRepository(ApplicationDbContext context) : base(context)
         {
         }
 
-        public IQueryable<Address> GetAll()
+        public IQueryable<Category> GetAll()
         {
             return _dbSet.AsNoTracking();
         }
-
     }
 }
