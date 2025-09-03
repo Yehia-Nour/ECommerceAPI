@@ -5,6 +5,6 @@ namespace ECommerceAPI.Repositories.Interfaces
 {
     public interface ICategoryRepository : IBaseRepository<Category>, IGetAllRepository<Category>
     {
-        Task<bool> ExistsByNameAsync(string name);
+        Task<bool> CategoryNameExistsAsync(string name);
     }
 }

@@ -7,9 +7,7 @@ namespace ECommerceAPI.Repositories.Implementations
 {
     public class AddressRepository : BaseRepository<Address>, IAddressRepository
     {
-        public AddressRepository(ApplicationDbContext context) : base(context)
-        {
-        }
+        public AddressRepository(ApplicationDbContext context) : base(context) { }
 
         public IQueryable<Address> GetAll()
         {

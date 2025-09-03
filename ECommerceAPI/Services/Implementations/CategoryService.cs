@@ -27,9 +27,9 @@ namespace ECommerceAPI.Services.Implementations
                 .Where(c => c.IsActive)
                 .ToListAsync();
 
-            var categoryResponses = _mapper.Map<List<CategoryResponseDTO>>(categories);
+            var categoryList = _mapper.Map<List<CategoryResponseDTO>>(categories);
 
-            return new ApiResponse<List<CategoryResponseDTO>>(200, categoryResponses, true);
+            return new ApiResponse<List<CategoryResponseDTO>>(200, categoryList, true);
         }
 
         public async Task<ApiResponse<CategoryResponseDTO>> GetCategoryByIdAsync(int id)
@@ -45,7 +45,7 @@ namespace ECommerceAPI.Services.Implementations
 
         public async Task<ApiResponse<CategoryResponseDTO>> CreateCategoryAsync(CategoryCreateDTO categoryDto)
         {
-            var exists = await _unitOfWork.Categories.ExistsByNameAsync(categoryDto.Name);
+            var exists = await _unitOfWork.Categories.CategoryNameExistsAsync(categoryDto.Name);
             if (exists)
                 return new ApiResponse<CategoryResponseDTO>(400, "Category name already exists.");
 
@@ -66,10 +66,10 @@ namespace ECommerceAPI.Services.Implementations
 
             if (!string.Equals(category.Name, categoryDto.Name, StringComparison.OrdinalIgnoreCase))
             {
-                var exists = await _unitOfWork.Categories.ExistsByNameAsync(categoryDto.Name);
+                var exists = await _unitOfWork.Categories.CategoryNameExistsAsync(categoryDto.Name);
                 if (exists)
                     return new ApiResponse<ConfirmationResponseDTO>(400, "Another category with the same name already exists.");
-            }
+            }   
 
             _mapper.Map(categoryDto, category);
             _unitOfWork.Categories.Update(category);

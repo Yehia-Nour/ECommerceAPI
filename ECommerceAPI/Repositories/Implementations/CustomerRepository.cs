@@ -8,9 +8,7 @@ namespace ECommerceAPI.Repositories.Implementations
 {
     public class CustomerRepository : BaseRepository<Customer>, ICustomerRepository
     {
-        public CustomerRepository(ApplicationDbContext context) : base(context)
-        {
-        }
+        public CustomerRepository(ApplicationDbContext context) : base(context) { }
 
         public async Task<Customer?> GetCustomerByEmailAsync(string email)
         {

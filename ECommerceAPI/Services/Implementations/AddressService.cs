@@ -92,9 +92,9 @@ namespace ECommerceAPI.Services.Implementations
                 .Where(a => a.CustomerId == customerId)
                 .ToListAsync();
 
-            var addressResponses = _mapper.Map<List<AddressResponseDTO>>(addresses);
+            var addressList = _mapper.Map<List<AddressResponseDTO>>(addresses);
 
-            return new ApiResponse<List<AddressResponseDTO>>(200, addressResponses, true);
+            return new ApiResponse<List<AddressResponseDTO>>(200, addressList, true);
         }
 
     }

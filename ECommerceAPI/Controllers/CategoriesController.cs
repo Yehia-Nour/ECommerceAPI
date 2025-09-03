@@ -25,17 +25,17 @@ namespace ECommerceAPI.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
-        [HttpPost("CreateCategory")]
-        public async Task<ActionResult<ApiResponse<CategoryResponseDTO>>> CreateCategory([FromBody] CategoryCreateDTO categoryDto)
-        {
-            var response = await _categoryService.CreateCategoryAsync(categoryDto);
-            return StatusCode(response.StatusCode, response);
-        }
-
         [HttpGet("GetCategoryById/{id}")]
         public async Task<ActionResult<ApiResponse<CategoryResponseDTO>>> GetCategoryById(int id)
         {
             var response = await _categoryService.GetCategoryByIdAsync(id);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpPost("CreateCategory")]
+        public async Task<ActionResult<ApiResponse<CategoryResponseDTO>>> CreateCategory([FromBody] CategoryCreateDTO categoryDto)
+        {
+            var response = await _categoryService.CreateCategoryAsync(categoryDto);
             return StatusCode(response.StatusCode, response);
         }
 

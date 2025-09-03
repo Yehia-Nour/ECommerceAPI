@@ -18,10 +18,10 @@ namespace ECommerceAPI.Controllers
             _productService = productService;
         }
 
-        [HttpPost("CreateProduct")]
-        public async Task<ActionResult<ApiResponse<ProductResponseDTO>>> CreateProduct([FromBody] ProductCreateDTO productDto)
+        [HttpGet("GetAllProducts")]
+        public async Task<ActionResult<ApiResponse<List<ProductResponseDTO>>>> GetAllProducts()
         {
-            var response = await _productService.CreateProductAsync(productDto);
+            var response = await _productService.GetAllProductsAsync();
 
             return StatusCode(response.StatusCode, response);
         }
@@ -35,6 +35,14 @@ namespace ECommerceAPI.Controllers
 
         }
 
+
+        [HttpPost("CreateProduct")]
+        public async Task<ActionResult<ApiResponse<ProductResponseDTO>>> CreateProduct([FromBody] ProductCreateDTO productDto)
+        {
+            var response = await _productService.CreateProductAsync(productDto);
+
+            return StatusCode(response.StatusCode, response);
+        }
         [HttpPut("UpdateProduct")]
         public async Task<ActionResult<ApiResponse<ConfirmationResponseDTO>>> UpdateProduct([FromBody] ProductUpdateDTO productDto)
         {
@@ -52,13 +60,6 @@ namespace ECommerceAPI.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
-        [HttpGet("GetAllProducts")]
-        public async Task<ActionResult<ApiResponse<List<ProductResponseDTO>>>> GetAllProducts()
-        {
-            var response = await _productService.GetAllProductsAsync();
-
-            return StatusCode(response.StatusCode, response);
-        }
 
         [HttpGet("GetAllProductsByCategory/{categoryId}")]
         public async Task<ActionResult<ApiResponse<List<ProductResponseDTO>>>> GetAllProductsByCategory(int categoryId)
