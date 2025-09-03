@@ -14,6 +14,7 @@ namespace ECommerceAPI.UoW
         public ICustomerRepository Customers { get; }
         public IAddressRepository Addresses { get; }
         public ICategoryRepository Categories { get; }
+        public IProductRepository Products { get; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -21,6 +22,7 @@ namespace ECommerceAPI.UoW
             Customers = new CustomerRepository(_context);
             Addresses = new AddressRepository(_context);
             Categories = new CategoryRepository(_context);
+            Products= new ProductRepository(_context);
         }
 
         public async Task<int> SaveChangesAsync()

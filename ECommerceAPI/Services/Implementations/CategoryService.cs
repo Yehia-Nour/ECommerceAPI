@@ -63,6 +63,7 @@ namespace ECommerceAPI.Services.Implementations
             var category = await _unitOfWork.Categories.GetByIdAsync(categoryDto.Id);
             if (category == null || !category.IsActive)
                 return new ApiResponse<ConfirmationResponseDTO>(404, "Category not found.");
+
             if (!string.Equals(category.Name, categoryDto.Name, StringComparison.OrdinalIgnoreCase))
             {
                 var exists = await _unitOfWork.Categories.ExistsByNameAsync(categoryDto.Name);
