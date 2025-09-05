@@ -57,6 +57,8 @@ namespace ECommerceAPI
 
             builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
 
+            builder.Services.AddScoped<IOrderService, OrderService>();
+
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             builder.Services.AddScoped<IAuthService, AuthService>();

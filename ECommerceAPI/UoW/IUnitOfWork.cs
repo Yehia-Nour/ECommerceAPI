@@ -11,7 +11,7 @@ namespace ECommerceAPI.UoW
         IProductRepository Products { get; }
         ICartRepository Carts { get; }
         ICartItemRepository CartItems { get; }
-
+        IOrderRepository Orders { get; }
         Task<int> SaveChangesAsync();
     }
 }

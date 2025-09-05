@@ -17,6 +17,8 @@ namespace ECommerceAPI.UoW
         public IProductRepository Products { get; }
         public ICartRepository Carts { get; }
         public ICartItemRepository CartItems { get; }
+        public IOrderRepository Orders { get; }
+
 
 
         public UnitOfWork(ApplicationDbContext context)
@@ -28,6 +30,7 @@ namespace ECommerceAPI.UoW
             Products= new ProductRepository(_context);
             Carts = new CartRepository(_context);
             CartItems = new CartItemRepository(_context);
+            Orders = new OrderRepository(_context);
         }
 
         public async Task<int> SaveChangesAsync()
