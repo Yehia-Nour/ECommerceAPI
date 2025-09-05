@@ -6,7 +6,7 @@ using System;
 
 namespace ECommerceAPI.Repositories.Implementations
 {
-    public class CustomerRepository : BaseRepository<Customer>, ICustomerRepository
+    public class CustomerRepository : GenericRepository<Customer>, ICustomerRepository
     {
         public CustomerRepository(ApplicationDbContext context) : base(context) { }
 

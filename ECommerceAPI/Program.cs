@@ -45,7 +45,7 @@ namespace ECommerceAPI
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("EFCoreDBConnection")));
 
-            builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             builder.Services.AddScoped<ICustomerService, CustomerService>();
 
@@ -54,6 +54,8 @@ namespace ECommerceAPI
             builder.Services.AddScoped<ICategoryService, CategoryService>();
 
             builder.Services.AddScoped<IProductService, ProductService>();
+
+            builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 

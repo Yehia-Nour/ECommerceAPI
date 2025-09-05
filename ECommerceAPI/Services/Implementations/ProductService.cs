@@ -52,7 +52,7 @@ namespace ECommerceAPI.Services.Implementations
                 return new ApiResponse<ProductResponseDTO>(400, "Product name already exists.");
 
             var categoryResponse = await _categoryService.GetCategoryByIdAsync(productDto.CategoryId);
-            if (categoryResponse.Data == null || !categoryResponse.Data.IsActive)
+            if (!categoryResponse.Success)
                 return new ApiResponse<ProductResponseDTO>(400, "Specified category does not exist.");
 
             var product = _mapper.Map<Product>(productDto);
@@ -78,7 +78,7 @@ namespace ECommerceAPI.Services.Implementations
             }
 
             var categoryResponse = await _categoryService.GetCategoryByIdAsync(productDto.CategoryId);
-            if (categoryResponse.Data == null || !categoryResponse.Data.IsActive)
+            if (!categoryResponse.Success)
                 return new ApiResponse<ConfirmationResponseDTO>(400, "Specified category does not exist.");
 
             _mapper.Map(productDto, product);

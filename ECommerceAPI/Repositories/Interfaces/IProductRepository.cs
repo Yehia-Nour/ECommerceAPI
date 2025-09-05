@@ -2,7 +2,7 @@
 
 namespace ECommerceAPI.Repositories.Interfaces
 {
-    public interface IProductRepository : IBaseRepository<Product>, IGetAllRepository<Product>
+    public interface IProductRepository : IGenericRepository<Product>, IGetAllRepository<Product>
     {
         Task<bool> ProductNameExistsAsync(string name);
     }

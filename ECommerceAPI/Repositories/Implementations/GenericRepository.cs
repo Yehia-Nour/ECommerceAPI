@@ -5,12 +5,12 @@ using System;
 
 namespace ECommerceAPI.Repositories.Implementations
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         protected readonly ApplicationDbContext _context;
         protected readonly DbSet<T> _dbSet;
 
-        public BaseRepository(ApplicationDbContext context)
+        public GenericRepository(ApplicationDbContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();

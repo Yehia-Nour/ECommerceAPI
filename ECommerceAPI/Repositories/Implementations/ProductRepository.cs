@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceAPI.Repositories.Implementations
 {
-    public class ProductRepository :BaseRepository<Product>, IProductRepository
+    public class ProductRepository :GenericRepository<Product>, IProductRepository
     {
         public ProductRepository(ApplicationDbContext context) : base(context){ }
 
