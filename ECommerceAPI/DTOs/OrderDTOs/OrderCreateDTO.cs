@@ -4,8 +4,6 @@ namespace ECommerceAPI.DTOs.OrderDTOs
 {
     public class OrderCreateDTO
     {
-        [Required(ErrorMessage = "Customer ID is required.")]
-        public int CustomerId { get; set; }
         [Required(ErrorMessage = "Billing Address ID is required.")]
         public int BillingAddressId { get; set; }
         [Required(ErrorMessage = "Shipping Address ID is required.")]

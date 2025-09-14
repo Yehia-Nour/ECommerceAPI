@@ -12,13 +12,11 @@ namespace ECommerceAPI.Services.Implementations
     public class ProductService : IProductService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
 
-        public ProductService(IUnitOfWork unitOfWork, ICategoryService categoryService, IMapper mapper)
+        public ProductService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
-            _categoryService = categoryService;
             _mapper = mapper;
         }
 
@@ -51,8 +49,8 @@ namespace ECommerceAPI.Services.Implementations
             if (exists)
                 return new ApiResponse<ProductResponseDTO>(400, "Product name already exists.");
 
-            var categoryResponse = await _categoryService.GetCategoryByIdAsync(productDto.CategoryId);
-            if (!categoryResponse.Success)
+            var category = await _unitOfWork.Categories.GetByIdAsync(productDto.CategoryId);
+            if (category == null)
                 return new ApiResponse<ProductResponseDTO>(400, "Specified category does not exist.");
 
             var product = _mapper.Map<Product>(productDto);
@@ -77,8 +75,8 @@ namespace ECommerceAPI.Services.Implementations
                     return new ApiResponse<ConfirmationResponseDTO>(400, "Another product with the same name already exists.");
             }
 
-            var categoryResponse = await _categoryService.GetCategoryByIdAsync(productDto.CategoryId);
-            if (!categoryResponse.Success)
+            var category = await _unitOfWork.Categories.GetByIdAsync(productDto.CategoryId);
+            if (category == null)
                 return new ApiResponse<ConfirmationResponseDTO>(400, "Specified category does not exist.");
 
             _mapper.Map(productDto, product);

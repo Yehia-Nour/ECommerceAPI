@@ -11,12 +11,10 @@ namespace ECommerceAPI.Services.Implementations
     public class AddressService : IAddressService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ICustomerService _customerService;
         private readonly IMapper _mapper;
-        public AddressService(IUnitOfWork unitOfWork, ICustomerService customerService, IMapper mapper)
+        public AddressService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
-            _customerService = customerService;
             _mapper = mapper;
         }
 
@@ -33,8 +31,8 @@ namespace ECommerceAPI.Services.Implementations
 
         public async Task<ApiResponse<AddressResponseDTO>> CreateAddressAsync(AddressCreateDTO addressDto, int customerId)
         {
-            var customerResponse = await _customerService.GetCustomerByIdAsync(customerId);
-            if (customerResponse.Data == null || customerResponse.StatusCode != 200)
+            var customer = await _unitOfWork.Customers.GetByIdAsync(customerId);
+            if (customer == null)
                 return new ApiResponse<AddressResponseDTO>(404, "Customer not found.");
 
             var address = _mapper.Map<Address>(addressDto);
@@ -50,7 +48,7 @@ namespace ECommerceAPI.Services.Implementations
         public async Task<ApiResponse<ConfirmationResponseDTO>> UpdateAddressAsync(AddressUpdateDTO addressDto, int customerId)
         {
             var address = await _unitOfWork.Addresses.GetByIdAsync(addressDto.AddressId);
-            if (address == null ||  address.CustomerId != customerId)
+            if (address == null || address.CustomerId != customerId)
                 return new ApiResponse<ConfirmationResponseDTO>(404, "Address not found.");
 
             _mapper.Map(addressDto, address);
@@ -83,8 +81,8 @@ namespace ECommerceAPI.Services.Implementations
 
         public async Task<ApiResponse<List<AddressResponseDTO>>> GetAddressesByCustomerAsync(int customerId)
         {
-            var customerResponse = await _customerService.GetCustomerByIdAsync(customerId);
-            if (customerResponse.Data == null || customerResponse.StatusCode != 200)
+            var customer = await _unitOfWork.Customers.GetByIdAsync(customerId);
+            if (customer == null)
                 return new ApiResponse<List<AddressResponseDTO>>(404, "Customer not found.");
 
             var addresses = await _unitOfWork.Addresses

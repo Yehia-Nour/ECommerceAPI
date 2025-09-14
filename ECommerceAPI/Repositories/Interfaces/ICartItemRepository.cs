@@ -9,6 +9,5 @@ namespace ECommerceAPI.Repositories.Interfaces
         void Update(CartItem cartItem);
         void Delete(CartItem cartItem);
         void RemoveRange(IEnumerable<CartItem> cartItems);
-
     }
 }

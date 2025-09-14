@@ -14,7 +14,7 @@ namespace ECommerceAPI.DTOs.OrderDTOs
         public decimal TotalDiscountAmount { get; set; }
         public decimal ShippingCost { get; set; }
         public decimal TotalAmount { get; set; }
-        public OrderStatus OrderStatus { get; set; }
+        public string OrderStatus { get; set; }
         public List<OrderItemResponseDTO> OrderItems { get; set; }
     }
 }

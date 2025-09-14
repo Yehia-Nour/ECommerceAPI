@@ -12,13 +12,11 @@ namespace ECommerceAPI.Services.Implementations
     public class ShoppingCartService : IShoppingCartService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IProductService _productService;
         private readonly IMapper _mapper;
 
-        public ShoppingCartService(IUnitOfWork unitOfWork, IProductService productService, IMapper mapper)
+        public ShoppingCartService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
-            _productService = productService;
             _mapper = mapper;
         }
 
@@ -46,11 +44,10 @@ namespace ECommerceAPI.Services.Implementations
 
         public async Task<ApiResponse<CartResponseDTO>> AddToCartAsync(AddToCartDTO addToCartDTO, int customerId)
         {
-            var productResponse = await _productService.GetProductByIdAsync(addToCartDTO.ProductId);
-            if (!productResponse.Success)
+            var product = await _unitOfWork.Products.GetByIdAsync(addToCartDTO.ProductId);
+            if (product == null)
                 return new ApiResponse<CartResponseDTO>(404, "Product not found.");
 
-            var product = productResponse.Data;
 
             if (addToCartDTO.Quantity > product.StockQuantity)
                 return new ApiResponse<CartResponseDTO>(400, $"Only {product.StockQuantity} units of {product.Name} are available.");

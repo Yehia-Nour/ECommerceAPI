@@ -8,7 +8,7 @@ namespace ECommerceAPI.Services.Interfaces
     {
         Task<ApiResponse<List<OrderResponseDTO>>> GetAllOrdersAsync();
         Task<ApiResponse<OrderResponseDTO>> GetOrderByIdAsync(int orderId);
-        Task<ApiResponse<OrderResponseDTO>> CreateOrderAsync(OrderCreateDTO orderDto);
+        Task<ApiResponse<OrderResponseDTO>> CreateOrderAsync(OrderCreateDTO orderDto, int customerId);
         Task<ApiResponse<ConfirmationResponseDTO>> UpdateOrderStatusAsync(OrderStatusUpdateDTO statusDto);
         Task<ApiResponse<List<OrderResponseDTO>>> GetOrdersByCustomerAsync(int customerId);
     }
