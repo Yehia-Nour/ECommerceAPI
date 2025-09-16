@@ -4,12 +4,15 @@ using ECommerceAPI.Models;
 using ECommerceAPI.Repositories;
 using ECommerceAPI.Repositories.Implementations;
 using ECommerceAPI.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace ECommerceAPI.UoW
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
+        private IDbContextTransaction _transaction;
+
 
         public ICustomerRepository Customers { get; }
         public IAddressRepository Addresses { get; }
@@ -18,7 +21,7 @@ namespace ECommerceAPI.UoW
         public ICartRepository Carts { get; }
         public ICartItemRepository CartItems { get; }
         public IOrderRepository Orders { get; }
-
+        public IPaymentRepository Payments { get; }
 
 
         public UnitOfWork(ApplicationDbContext context)
@@ -31,11 +34,33 @@ namespace ECommerceAPI.UoW
             Carts = new CartRepository(_context);
             CartItems = new CartItemRepository(_context);
             Orders = new OrderRepository(_context);
+            Payments = new PaymentRepository(_context);
         }
 
         public async Task<int> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync();
+        }
+
+        public async Task BeginTransactionAsync()
+        {
+            _transaction = await _context.Database.BeginTransactionAsync();
+        }
+
+        public async Task CommitAsync()
+        {
+            await _transaction.CommitAsync();
+        }
+
+        public async Task RollbackAsync()
+        {
+            await _transaction.RollbackAsync();
+        }
+
+        public void Dispose()
+        {
+            _transaction?.Dispose();
+            _context.Dispose();
         }
     }
 }

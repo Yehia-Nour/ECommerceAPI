@@ -1,9 +1,10 @@
-﻿using ECommerceAPI.Repositories.Interfaces;
+﻿using ECommerceAPI.Repositories.Implementations;
+using ECommerceAPI.Repositories.Interfaces;
 using System.Threading.Tasks;
 
 namespace ECommerceAPI.UoW
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         ICustomerRepository Customers { get; }
         IAddressRepository Addresses { get; }
@@ -12,6 +13,11 @@ namespace ECommerceAPI.UoW
         ICartRepository Carts { get; }
         ICartItemRepository CartItems { get; }
         IOrderRepository Orders { get; }
+        IPaymentRepository Payments { get; }
+
         Task<int> SaveChangesAsync();
+        Task BeginTransactionAsync();
+        Task CommitAsync();
+        Task RollbackAsync();
     }
 }

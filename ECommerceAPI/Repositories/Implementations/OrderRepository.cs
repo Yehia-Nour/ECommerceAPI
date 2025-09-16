@@ -50,11 +50,17 @@ namespace ECommerceAPI.Repositories.Implementations
             return await _dbSet
                 .Where(o => o.CustomerId == customerId)
                 .Include(o => o.OrderItems)
-                    .ThenInclude(oi => oi.Product)
+                .ThenInclude(oi => oi.Product)
                 .Include(o => o.ShippingAddress)
                 .Include(o => o.BillingAddress)
                 .AsNoTracking()
                 .ToListAsync();
+        }
+        public async Task<Order?> GetOrderWithPaymentAsync(int orderId, int customerId)
+        {
+            return await _dbSet
+                .Include(o => o.Payment)
+                .FirstOrDefaultAsync(o => o.Id == orderId && o.CustomerId == customerId);
         }
     }
 }
