@@ -10,5 +10,6 @@ namespace ECommerceAPI.Repositories.Interfaces
         void Update(Payment payment);
         Task<Payment?> GetPaymentByOrderIdAsync(int orderId);
         Task<Payment?> GetPaymentWithOrderAsync(int paymentId);
+        Task<List<Payment>> GetPendingPaymentsAsync();
     }
 }

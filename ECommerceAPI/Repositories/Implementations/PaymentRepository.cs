@@ -1,5 +1,6 @@
 ﻿using ECommerceAPI.Data;
 using ECommerceAPI.Models;
+using ECommerceAPI.Models.Enums;
 using ECommerceAPI.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
@@ -46,5 +47,15 @@ namespace ECommerceAPI.Repositories.Implementations
                 .Include(p => p.Order)
                 .FirstOrDefaultAsync(p => p.Id == paymentId);
         }
+
+        public async Task<List<Payment>> GetPendingPaymentsAsync()
+        {
+            return await _dbSet
+                .Include(p => p.Order)
+                .Where(p => p.Status == PaymentStatus.Pending &&
+                            p.PaymentMethod.ToUpper() != "COD")
+                .ToListAsync();
+        }
+
     }
 }
