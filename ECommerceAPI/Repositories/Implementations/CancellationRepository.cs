@@ -54,5 +54,16 @@ namespace ECommerceAPI.Repositories.Implementations
                 .ThenInclude(o => o.Customer)
                 .FirstOrDefaultAsync(c => c.Id == cancellationId);
         }
+
+        public async Task<Cancellation?> GetCancellationWithDetailsByIdAsync(int cancellationId)
+        {
+            return await _dbSet
+                .Include(c => c.Order)
+                .ThenInclude(o => o.Payment)
+                .Include(c => c.Order)
+                .ThenInclude(o => o.Customer)
+                .FirstOrDefaultAsync(c => c.Id == cancellationId);
+        }
+
     }
 }

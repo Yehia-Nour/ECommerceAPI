@@ -16,6 +16,7 @@ namespace ECommerceAPI.UoW
         IPaymentRepository Payments { get; }
         ICancellationRepository Cancellations { get; }
         IOrderItemRepository OrderItems { get; }
+        IRefundRepository Refunds { get; }
 
         Task ExecuteInTransactionAsync(Func<Task> action);
         Task<int> SaveChangesAsync();
