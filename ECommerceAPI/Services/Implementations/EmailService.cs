@@ -1,4 +1,5 @@
-﻿using ECommerceAPI.Services.Interfaces;
+﻿using ECommerceAPI.Models;
+using ECommerceAPI.Services.Interfaces;
 using System.Net;
 using System.Net.Mail;
 
@@ -6,6 +7,7 @@ namespace ECommerceAPI.Services.Implementations
 {
     public class EmailService : IEmailService
     {
+        private readonly IEmailTemplateService _emailTemplateService;
         private readonly IConfiguration _configuration;
 
         public EmailService(IConfiguration configuration)
@@ -45,6 +47,28 @@ namespace ECommerceAPI.Services.Implementations
             mailMessage.To.Add(ToEmail);
 
             return client.SendMailAsync(mailMessage);
+        }
+
+        public async Task SendCancellationAcceptedEmailAsync(Cancellation cancellation)
+        {
+            if (cancellation.Order == null || cancellation.Order.Customer == null)
+                return;
+
+            string subject = $"Cancellation Request Update - Order #{cancellation.Order.OrderNumber}";
+            string body = _emailTemplateService.GetCancellationAcceptedTemplate(cancellation);
+
+            await SendEmailAsync(cancellation.Order.Customer.Email, subject, body, true);
+        }
+
+        public async Task SendCancellationRejectedEmailAsync(Cancellation cancellation)
+        {
+            if (cancellation.Order == null || cancellation.Order.Customer == null)
+                return;
+
+            string subject = $"Cancellation Request Rejected - Order #{cancellation.Order.OrderNumber}";
+            string body = _emailTemplateService.GetCancellationRejectedTemplate(cancellation);
+
+            await SendEmailAsync(cancellation.Order.Customer.Email, subject, body, true);
         }
     }
 }

@@ -117,7 +117,7 @@ namespace ECommerceAPI.Services.Implementations
                 return new ApiResponse<List<ProductResponseDTO>>(200, new List<ProductResponseDTO>(), true);
 
             var productList = _mapper.Map<List<ProductResponseDTO>>(products);
-            return new ApiResponse<List<ProductResponseDTO>>(200, productList);
+            return new ApiResponse<List<ProductResponseDTO>>(200, productList, true);
         }
 
 

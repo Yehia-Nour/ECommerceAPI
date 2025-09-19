@@ -14,10 +14,10 @@ namespace ECommerceAPI.UoW
         ICartItemRepository CartItems { get; }
         IOrderRepository Orders { get; }
         IPaymentRepository Payments { get; }
+        ICancellationRepository Cancellations { get; }
+        IOrderItemRepository OrderItems { get; }
 
+        Task ExecuteInTransactionAsync(Func<Task> action);
         Task<int> SaveChangesAsync();
-        Task BeginTransactionAsync();
-        Task CommitAsync();
-        Task RollbackAsync();
     }
 }

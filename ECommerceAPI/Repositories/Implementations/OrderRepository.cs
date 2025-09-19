@@ -19,7 +19,7 @@ namespace ECommerceAPI.Repositories.Implementations
         {
             return await _dbSet
                 .Include(o => o.OrderItems)
-                    .ThenInclude(oi => oi.Product)
+                .ThenInclude(oi => oi.Product)
                 .Include(o => o.Customer)
                 .Include(o => o.BillingAddress)
                 .Include(o => o.ShippingAddress)
@@ -60,6 +60,13 @@ namespace ECommerceAPI.Repositories.Implementations
         {
             return await _dbSet
                 .Include(o => o.Payment)
+                .FirstOrDefaultAsync(o => o.Id == orderId && o.CustomerId == customerId);
+        }
+
+        public async Task<Order?> GetOrderByIdAndCustomerIdAsync(int orderId, int customerId)
+        {
+            return await _dbSet
+                .AsNoTracking()
                 .FirstOrDefaultAsync(o => o.Id == orderId && o.CustomerId == customerId);
         }
     }

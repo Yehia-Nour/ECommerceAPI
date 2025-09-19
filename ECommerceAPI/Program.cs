@@ -65,11 +65,16 @@ namespace ECommerceAPI
 
             builder.Services.AddScoped<IPaymentService, PaymentService>();
 
+            builder.Services.AddScoped<ICancellationService, CancellationService>();
+
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             builder.Services.AddScoped<IAuthService, AuthService>();
 
             builder.Services.AddScoped<IJwtService, JwtService>();
+
+            builder.Services.AddHostedService<PendingPaymentService>();
+
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

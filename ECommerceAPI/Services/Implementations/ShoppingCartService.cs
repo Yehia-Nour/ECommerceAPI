@@ -108,7 +108,7 @@ namespace ECommerceAPI.Services.Implementations
             var updatedCart = await _unitOfWork.Carts.GetCartByCustomerIdAsync(customerId);
             var cartResponse = _mapper.Map<CartResponseDTO>(updatedCart);
 
-            return new ApiResponse<CartResponseDTO>(200, cartResponse);
+            return new ApiResponse<CartResponseDTO>(200, cartResponse, true);
         }
 
         public async Task<ApiResponse<CartResponseDTO>> UpdateCartItemAsync(UpdateCartItemDTO updateCartItemDTO, int customerId)
@@ -137,7 +137,7 @@ namespace ECommerceAPI.Services.Implementations
             var updatedCart = await _unitOfWork.Carts.GetCartByCustomerIdAsync(customerId);
             var cartResponse = _mapper.Map<CartResponseDTO>(updatedCart);
 
-            return new ApiResponse<CartResponseDTO>(200, cartResponse);
+            return new ApiResponse<CartResponseDTO>(200, cartResponse, true);
         }
 
         public async Task<ApiResponse<CartResponseDTO>> RemoveCartItemAsync(int cartItemId, int customerId)
@@ -157,7 +157,7 @@ namespace ECommerceAPI.Services.Implementations
             var updatedCart = await _unitOfWork.Carts.GetCartByCustomerIdAsync(customerId);
             var cartResponse = _mapper.Map<CartResponseDTO>(updatedCart);
 
-            return new ApiResponse<CartResponseDTO>(200, cartResponse);
+            return new ApiResponse<CartResponseDTO>(200, cartResponse, true);
         }
 
         public async Task<ApiResponse<ConfirmationResponseDTO>> ClearCartAsync(int customerId)

@@ -31,7 +31,7 @@ namespace ECommerceAPI.Services.Implementations
 
             var orderList = _mapper.Map<List<OrderResponseDTO>>(orders);
 
-            return new ApiResponse<List<OrderResponseDTO>>(200, orderList);
+            return new ApiResponse<List<OrderResponseDTO>>(200, orderList, true);
         }
 
         public async Task<ApiResponse<OrderResponseDTO>> GetOrderByIdAsync(int orderId)
@@ -43,7 +43,7 @@ namespace ECommerceAPI.Services.Implementations
 
             var orderResponse = _mapper.Map<OrderResponseDTO>(order);
 
-            return new ApiResponse<OrderResponseDTO>(200, orderResponse);
+            return new ApiResponse<OrderResponseDTO>(200, orderResponse, true);
         }
 
         public async Task<ApiResponse<OrderResponseDTO>> CreateOrderAsync(OrderCreateDTO orderDto, int customerId)
@@ -133,7 +133,7 @@ namespace ECommerceAPI.Services.Implementations
 
             var orderResponse = _mapper.Map<OrderResponseDTO>(order);
 
-            return new ApiResponse<OrderResponseDTO>(200, orderResponse);
+            return new ApiResponse<OrderResponseDTO>(200, orderResponse, true);
         }
 
 
@@ -175,7 +175,7 @@ namespace ECommerceAPI.Services.Implementations
 
             var orderDtos = _mapper.Map<List<OrderResponseDTO>>(orders);
 
-            return new ApiResponse<List<OrderResponseDTO>>(200, orderDtos);
+            return new ApiResponse<List<OrderResponseDTO>>(200, orderDtos, true);
         }
 
     }

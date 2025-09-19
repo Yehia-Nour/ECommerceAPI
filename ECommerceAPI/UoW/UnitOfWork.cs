@@ -1,7 +1,4 @@
-﻿
-using ECommerceAPI.Data;
-using ECommerceAPI.Models;
-using ECommerceAPI.Repositories;
+﻿using ECommerceAPI.Data;
 using ECommerceAPI.Repositories.Implementations;
 using ECommerceAPI.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -11,8 +8,6 @@ namespace ECommerceAPI.UoW
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
-        private IDbContextTransaction _transaction;
-
 
         public ICustomerRepository Customers { get; }
         public IAddressRepository Addresses { get; }
@@ -22,7 +17,8 @@ namespace ECommerceAPI.UoW
         public ICartItemRepository CartItems { get; }
         public IOrderRepository Orders { get; }
         public IPaymentRepository Payments { get; }
-
+        public ICancellationRepository Cancellations { get; }
+        public IOrderItemRepository OrderItems { get; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -30,11 +26,13 @@ namespace ECommerceAPI.UoW
             Customers = new CustomerRepository(_context);
             Addresses = new AddressRepository(_context);
             Categories = new CategoryRepository(_context);
-            Products= new ProductRepository(_context);
+            Products = new ProductRepository(_context);
             Carts = new CartRepository(_context);
             CartItems = new CartItemRepository(_context);
             Orders = new OrderRepository(_context);
             Payments = new PaymentRepository(_context);
+            Cancellations = new CancellationRepository(_context);
+            OrderItems = new OrderItemRepository(_context);
         }
 
         public async Task<int> SaveChangesAsync()
@@ -42,34 +40,23 @@ namespace ECommerceAPI.UoW
             return await _context.SaveChangesAsync();
         }
 
-        public async Task BeginTransactionAsync()
+        public async Task ExecuteInTransactionAsync(Func<Task> action)
         {
-            _transaction = await _context.Database.BeginTransactionAsync();
-        }
-
-        public async Task CommitAsync()
-        {
-            if (_transaction != null)
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                await _transaction.CommitAsync();
-                await _transaction.DisposeAsync();
-                _transaction = null;
+                await action();
+                await transaction.CommitAsync();
             }
-        }
-
-        public async Task RollbackAsync()
-        {
-            if (_transaction != null)
+            catch
             {
-                await _transaction.RollbackAsync();
-                await _transaction.DisposeAsync();
-                _transaction = null;
+                await transaction.RollbackAsync();
+                throw;
             }
         }
 
         public void Dispose()
         {
-            _transaction?.Dispose();
             _context.Dispose();
         }
     }

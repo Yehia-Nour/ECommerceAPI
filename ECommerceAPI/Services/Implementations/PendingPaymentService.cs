@@ -68,7 +68,7 @@ namespace ECommerceAPI.Services.Implementations
                 }
                 catch (Exception ex)
                 {
-                    // must i to do
+                    await Task.Delay(_checkInterval, stoppingToken);
                 }
 
                 await Task.Delay(_checkInterval, stoppingToken);

@@ -11,6 +11,7 @@ namespace ECommerceAPI.Repositories.Interfaces
         Task AddAsync(Order order);
         Task<List<Order>> GetOrdersByCustomerIdAsync(int customerId);
         Task<Order?> GetOrderWithPaymentAsync(int orderId, int customerId);
+        Task<Order?> GetOrderByIdAndCustomerIdAsync(int orderId, int customerId);
 
     }
 }
