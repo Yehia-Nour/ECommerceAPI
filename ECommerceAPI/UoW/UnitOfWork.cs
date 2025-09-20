@@ -20,6 +20,7 @@ namespace ECommerceAPI.UoW
         public ICancellationRepository Cancellations { get; }
         public IOrderItemRepository OrderItems { get; }
         public IRefundRepository Refunds { get; }
+        public IFeedbackRepository Feedbacks { get; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -35,6 +36,7 @@ namespace ECommerceAPI.UoW
             Cancellations = new CancellationRepository(_context);
             OrderItems = new OrderItemRepository(_context);
             Refunds = new RefundRepository(_context);
+            Feedbacks = new FeedbackRepository(_context);
         }
 
         public async Task<int> SaveChangesAsync()

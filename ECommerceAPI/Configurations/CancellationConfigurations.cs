@@ -8,7 +8,7 @@ namespace ECommerceAPI.Configurations
     {
         public void Configure(EntityTypeBuilder<Cancellation> builder)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

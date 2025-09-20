@@ -8,7 +8,7 @@ namespace ECommerceAPI.Configurations
     {
         public void Configure(EntityTypeBuilder<Cart> builder)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

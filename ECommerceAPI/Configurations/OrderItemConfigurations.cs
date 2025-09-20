@@ -8,7 +8,7 @@ namespace ECommerceAPI.Configurations
     {
         public void Configure(EntityTypeBuilder<OrderItem> builder)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }
