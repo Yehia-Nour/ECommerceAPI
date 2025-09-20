@@ -70,5 +70,17 @@ namespace ECommerceAPI.Services.Implementations
 
             await SendEmailAsync(cancellation.Order.Customer.Email, subject, body, true);
         }
+
+        public async Task SendRefundSuccessEmailAsync(Refund refund, Cancellation cancellation, string? customSubject = null)
+        {
+            if (cancellation.Order?.Customer?.Email == null)
+                return;
+
+            string subject = $"Your Refund Has Been Processed Successfully, Order #{cancellation.Order.OrderNumber}";
+            string body = _emailTemplateService.GetRefundSuccessTemplate(refund, cancellation.Order.OrderNumber, cancellation);
+
+            await SendEmailAsync(cancellation.Order.Customer.Email, subject, body, true);
+        }
+
     }
 }

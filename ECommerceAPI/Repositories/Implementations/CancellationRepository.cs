@@ -1,5 +1,6 @@
 ﻿using ECommerceAPI.Data;
 using ECommerceAPI.Models;
+using ECommerceAPI.Models.Enums;
 using ECommerceAPI.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -64,6 +65,18 @@ namespace ECommerceAPI.Repositories.Implementations
                 .ThenInclude(o => o.Customer)
                 .FirstOrDefaultAsync(c => c.Id == cancellationId);
         }
+
+        public async Task<List<Cancellation>> GetEligibleRefundsAsync()
+        {
+            return await _dbSet
+                .Include(c => c.Order)
+                .ThenInclude(o => o.Payment)
+                .Where(c => c.Status == CancellationStatus.Approved
+                            && c.Refund == null
+                            && c.Order.Payment.PaymentMethod.ToLower() != "cod")
+                .ToListAsync();
+        }
+
 
     }
 }

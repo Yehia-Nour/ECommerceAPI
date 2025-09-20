@@ -12,6 +12,5 @@ namespace ECommerceAPI.Services.Interfaces
         Task<ApiResponse<RefundResponseDTO>> ProcessRefundAsync(RefundRequestDTO refundRequest);
         Task<ApiResponse<ConfirmationResponseDTO>> UpdateRefundStatusAsync(RefundStatusUpdateDTO statusUpdate);
         Task<PaymentGatewayRefundResponseDTO> ProcessRefundPaymentAsync(Refund refund);
-        string GenerateRefundSuccessEmailBody(Refund refund, string orderNumber, Cancellation cancellation);
     }
 }

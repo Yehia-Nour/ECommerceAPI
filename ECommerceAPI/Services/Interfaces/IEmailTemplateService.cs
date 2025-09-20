@@ -7,5 +7,6 @@ namespace ECommerceAPI.Services.Interfaces
         string GetOrderConfirmationTemplate(Order order, Payment? payment);
         string GetCancellationAcceptedTemplate(Cancellation cancellation);
         string GetCancellationRejectedTemplate(Cancellation cancellation);
+        string GetRefundSuccessTemplate(Refund refund, string orderNumber, Cancellation cancellation);
     }
 }

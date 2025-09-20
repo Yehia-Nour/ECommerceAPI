@@ -15,6 +15,14 @@ namespace ECommerceAPI.Repositories.Implementations
             _dbSet = _context.Set<Refund>();
         }
 
+        public async Task<List<Refund>> GetAllAsync()
+        {
+            return await _dbSet.Include(r => r.Cancellation)
+                .ThenInclude(c => c.Order)
+                .ThenInclude(o => o.Payment)
+                .ToListAsync();
+        }
+
         public async Task AddAsync(Refund refund)
         {
             await _dbSet.AddAsync(refund);
@@ -30,9 +38,18 @@ namespace ECommerceAPI.Repositories.Implementations
             return await _dbSet.FirstOrDefaultAsync(r => r.CancellationId == cancellationId);
         }
 
+        public async Task<Refund?> GetRefundWithOrderDetailsByIdAsync(int refundId)
+        {
+            return await _dbSet
+                .Include(r => r.Cancellation)
+                .ThenInclude(c => c.Order)
+                .ThenInclude(o => o.Payment)
+                .FirstOrDefaultAsync(r => r.Id == refundId);
+        }
+
         public async Task<Refund?> GetRefundWithDetailsByIdAsync(int refundId)
         {
-            return await _context.Refunds
+            return await _dbSet
                 .Include(r => r.Cancellation)
                 .ThenInclude(c => c.Order)
                 .ThenInclude(o => o.Customer)

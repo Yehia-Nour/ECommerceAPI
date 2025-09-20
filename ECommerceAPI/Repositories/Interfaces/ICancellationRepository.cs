@@ -11,5 +11,6 @@ namespace ECommerceAPI.Repositories.Interfaces
         Task<Cancellation?> GetCancellationByOrderIdAsync(int orderId);
         Task<Cancellation?> GetCancellationWithOrderAndCustomerAsync(int cancellationId);
         Task<Cancellation?> GetCancellationWithDetailsByIdAsync(int cancellationId);
+        Task<List<Cancellation>> GetEligibleRefundsAsync();
     }
 }
