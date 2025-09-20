@@ -67,6 +67,8 @@ namespace ECommerceAPI
 
             builder.Services.AddScoped<ICancellationService, CancellationService>();
 
+            builder.Services.AddScoped<IRefundService, RefundService>();
+
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             builder.Services.AddScoped<IAuthService, AuthService>();

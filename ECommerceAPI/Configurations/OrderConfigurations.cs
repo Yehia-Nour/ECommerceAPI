@@ -21,7 +21,7 @@ namespace ECommerceAPI.Configurations
 
             builder.HasOne(o => o.Cancellation)
                 .WithOne(c => c.Order)
-                .HasForeignKey<CancellationConfigurations>(c => c.OrderId)
+                .HasForeignKey<Cancellation>(c => c.OrderId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

@@ -6,7 +6,7 @@ namespace ECommerceAPI.Repositories.Interfaces
     {
         Task<List<Refund>> GetAllAsync();
         Task AddAsync(Refund refund);
-        void Update(Refund refund)
+        void Update(Refund refund);
         Task<Refund?> GetRefundByCancellationIdAsync(int cancellationId);
         Task<Refund?> GetRefundWithOrderDetailsByIdAsync(int refundId);
         Task<Refund?> GetRefundWithDetailsByIdAsync(int refundId);
