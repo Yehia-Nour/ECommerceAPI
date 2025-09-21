@@ -10,6 +10,7 @@ public static class ClaimsPrincipalExtensions
 
         if (!int.TryParse(customerIdStr, out int customerId))
             throw new Exception("Invalid or missing customer ID in token.");
+        //int customerId = 0;
 
         return customerId;
     }
