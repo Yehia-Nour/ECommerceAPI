@@ -1,12 +1,9 @@
-﻿using ECommerceAPI.DTOs;
-using ECommerceAPI.DTOs.CustomerDTOs;
-using ECommerceAPI.Helpers;
-using ECommerceAPI.Models;
-using ECommerceAPI.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+﻿using ECommerce.Application.DTOs;
+using ECommerce.Application.DTOs.CustomerDTOs;
+using ECommerce.Application.Helpers;
+using ECommerce.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
-using System.Security.Claims;
+
 
 namespace ECommerceAPI.Controllers
 {

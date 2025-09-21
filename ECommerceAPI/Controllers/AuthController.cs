@@ -1,10 +1,8 @@
-﻿using ECommerceAPI.DTOs;
-using ECommerceAPI.DTOs.CustomerDTOs;
-using ECommerceAPI.Services.Implementations;
-using ECommerceAPI.Services.Interfaces;
+﻿using ECommerce.Application.DTOs;
+using ECommerce.Application.DTOs.CustomerDTOs;
+using ECommerce.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceAPI.Controllers
 {

@@ -1,7 +1,6 @@
-﻿using ECommerceAPI.DTOs;
-using ECommerceAPI.DTOs.CategoryDTOs;
-using ECommerceAPI.Services.Implementations;
-using ECommerceAPI.Services.Interfaces;
+﻿using ECommerce.Application.DTOs;
+using ECommerce.Application.DTOs.CategoryDTOs;
+using ECommerce.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

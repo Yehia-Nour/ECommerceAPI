@@ -1,7 +1,7 @@
-﻿using ECommerceAPI.DTOs;
-using ECommerceAPI.DTOs.FeedbackDTOs;
-using ECommerceAPI.Helpers;
-using ECommerceAPI.Services.Interfaces;
+﻿using ECommerce.Application.DTOs;
+using ECommerce.Application.DTOs.FeedbackDTOs;
+using ECommerce.Application.Helpers;
+using ECommerce.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceAPI.Controllers

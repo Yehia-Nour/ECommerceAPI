@@ -1,9 +1,7 @@
-﻿using ECommerceAPI.DTOs;
-using ECommerceAPI.DTOs.PaymentDTOs;
-using ECommerceAPI.Helpers;
-using ECommerceAPI.Services.Implementations;
-using ECommerceAPI.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
+﻿using ECommerce.Application.DTOs;
+using ECommerce.Application.DTOs.PaymentDTOs;
+using ECommerce.Application.Helpers;
+using ECommerce.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceAPI.Controllers
