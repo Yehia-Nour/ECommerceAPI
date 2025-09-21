@@ -6,11 +6,9 @@ public static class ClaimsPrincipalExtensions
 {
     public static int GetCustomerId(this ClaimsPrincipal user)
     {
-        var customerIdStr = user.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        if (!int.TryParse(customerIdStr, out int customerId))
+        var claim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+        if (claim == null || !int.TryParse(claim.Value, out int customerId))
             throw new Exception("Invalid or missing customer ID in token.");
-        //int customerId = 0;
 
         return customerId;
     }
