@@ -4,8 +4,6 @@ namespace ECommerceAPI.DTOs.FeedbackDTOs
 {
     public class FeedbackCreateDTO
     {
-        [Required(ErrorMessage = "CustomerId is required.")]
-        public int CustomerId { get; set; }
         [Required(ErrorMessage = "ProductId is required.")]
         public int ProductId { get; set; }
         [Required(ErrorMessage = "Rating is required.")]

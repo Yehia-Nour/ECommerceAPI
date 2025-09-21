@@ -1,5 +1,6 @@
 ﻿using ECommerceAPI.Data;
 using ECommerceAPI.Models;
+using ECommerceAPI.Models.Enums;
 using ECommerceAPI.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +22,17 @@ namespace ECommerceAPI.Repositories.Implementations
                 .Include(oi => oi.Product)
                 .Where(oi => oi.OrderId == orderId)
                 .ToListAsync();
+        }
+
+        public async Task<OrderItem?> GetDeliveredOrderItemAsync(int productId, int customerId)
+        {
+            return await _dbSet
+                .Include(oi => oi.Order)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(oi =>
+                    oi.ProductId == productId &&
+                    oi.Order.CustomerId == customerId &&
+                    oi.Order.OrderStatus == OrderStatus.Delivered);
         }
     }
 }

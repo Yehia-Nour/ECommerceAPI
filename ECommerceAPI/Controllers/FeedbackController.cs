@@ -19,7 +19,8 @@ namespace ECommerceAPI.Controllers
         [HttpPost("SubmitFeedback")]
         public async Task<ActionResult<ApiResponse<FeedbackResponseDTO>>> SubmitFeedback([FromBody] FeedbackCreateDTO feedbackCreateDTO)
         {
-            var response = await _feedbackService.SubmitFeedbackAsync(feedbackCreateDTO);
+            var customerId = User.GetCustomerId();
+            var response = await _feedbackService.SubmitFeedbackAsync(feedbackCreateDTO, customerId);
 
             return StatusCode(response.StatusCode, response);
         }
@@ -43,7 +44,8 @@ namespace ECommerceAPI.Controllers
         [HttpPut("UpdateFeedback")]
         public async Task<ActionResult<ApiResponse<FeedbackResponseDTO>>> UpdateFeedback([FromBody] FeedbackUpdateDTO feedbackUpdateDTO)
         {
-            var response = await _feedbackService.UpdateFeedbackAsync(feedbackUpdateDTO);
+            var customerId = User.GetCustomerId();
+            var response = await _feedbackService.UpdateFeedbackAsync(feedbackUpdateDTO, customerId);
 
             return StatusCode(response.StatusCode, response);
         }
@@ -52,7 +54,6 @@ namespace ECommerceAPI.Controllers
         public async Task<ActionResult<ApiResponse<ConfirmationResponseDTO>>> DeleteFeedback(int feedbackId)
         {
             var customerId = User.GetCustomerId();
-
             var response = await _feedbackService.DeleteFeedbackAsync(feedbackId, customerId);
 
             return StatusCode(response.StatusCode, response);
