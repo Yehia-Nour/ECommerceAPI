@@ -22,5 +22,38 @@ public class OrderConfigurations : IEntityTypeConfiguration<Order>
             .WithOne(c => c.Order)
             .HasForeignKey<Cancellation>(c => c.OrderId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(o => o.Customer)
+            .WithMany(c => c.Orders)
+            .HasForeignKey(o => o.CustomerId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(o => o.Payment)
+            .WithOne(p => p.Order)
+            .HasForeignKey<Payment>(p => p.OrderId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasMany(o => o.OrderItems)
+            .WithOne(oi => oi.Order)
+            .HasForeignKey(oi => oi.OrderId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Property(o => o.OrderNumber)
+            .HasMaxLength(30);
+
+        builder.Property(o => o.TotalBaseAmount)
+            .HasColumnType("decimal(18,2)");
+
+        builder.Property(o => o.TotalDiscountAmount)
+            .HasColumnType("decimal(18,2)");
+
+        builder.Property(o => o.ShippingCost)
+            .HasColumnType("decimal(18,2)");
+
+        builder.Property(o => o.TotalAmount)
+            .HasColumnType("decimal(18,2)");
     }
 }

@@ -8,6 +8,19 @@ public class AddressConfigurations : IEntityTypeConfiguration<Address>
 {
     public void Configure(EntityTypeBuilder<Address> builder)
     {
-        //throw new NotImplementedException();
+        builder.Property(a => a.AddressLine1)
+            .HasMaxLength(100);
+
+        builder.Property(a => a.AddressLine2)
+            .HasMaxLength(100);
+
+        builder.Property(a => a.City)
+            .HasMaxLength(50);
+
+        builder.Property(a => a.State)
+            .HasMaxLength(50);
+
+        builder.Property(a => a.Country)
+            .HasMaxLength(50);
     }
 }

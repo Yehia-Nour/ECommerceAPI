@@ -24,5 +24,6 @@ public class Product
     public ICollection<OrderItem> OrderItems { get; set; }
 
     public ICollection<Feedback> Feedbacks { get; set; }
+    public ICollection<CartItem> CartItems { get; set; }
 }
 

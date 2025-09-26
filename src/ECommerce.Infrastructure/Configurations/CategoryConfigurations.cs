@@ -8,6 +8,18 @@ public class CategoryConfigurations : IEntityTypeConfiguration<Category>
 {
     public void Configure(EntityTypeBuilder<Category> builder)
     {
+        builder.HasIndex(c => c.Name)
+            .IsUnique()
+            .HasDatabaseName("IX_Name_Unique");
+
+        builder.Property(c => c.Name)
+            .IsRequired()
+            .HasMaxLength(100);
+
+        builder.Property(c => c.Description)
+            .IsRequired()
+            .HasMaxLength(500);
+
         builder.HasData(
            new Category { Id = 1, Name = "Electronics", Description = "Electronic devices and accessories", IsActive = true },
            new Category { Id = 2, Name = "Books", Description = "Books and magazines", IsActive = true }

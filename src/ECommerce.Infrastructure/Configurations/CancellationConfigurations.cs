@@ -8,7 +8,17 @@ public class CancellationConfigurations : IEntityTypeConfiguration<Cancellation>
 {
     public void Configure(EntityTypeBuilder<Cancellation> builder)
     {
-        //throw new NotImplementedException();
+        builder.Property(c => c.Reason)
+            .HasMaxLength(500);
+
+        builder.Property(c => c.Remarks)
+            .HasMaxLength(500);
+
+        builder.Property(c => c.OrderAmount)
+            .HasColumnType("decimal(18,2)");
+
+        builder.Property(c => c.CancellationCharges)
+            .HasColumnType("decimal(18,2)");
     }
 }
 

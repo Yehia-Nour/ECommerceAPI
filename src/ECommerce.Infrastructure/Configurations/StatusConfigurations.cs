@@ -7,6 +7,10 @@ public class StatusConfigurations : IEntityTypeConfiguration<Status>
 {
     public void Configure(EntityTypeBuilder<Status> builder)
     {
+        builder.Property(s => s.Name)
+            .IsRequired()
+            .HasColumnType("nvarchar(50)");
+
         builder.HasData(
             new Status { Id = 1, Name = "Pending" },
             new Status { Id = 2, Name = "Processing" },

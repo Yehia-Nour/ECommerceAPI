@@ -8,15 +8,8 @@ public class FeedbackConfigurations : IEntityTypeConfiguration<Feedback>
 {
     public void Configure(EntityTypeBuilder<Feedback> builder)
     {
-        builder.HasOne(f => f.Customer)
-            .WithMany(c => c.Feedbacks)
-            .HasForeignKey(f => f.CustomerId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        builder.HasOne(f => f.Product)
-            .WithMany(p => p.Feedbacks)
-            .HasForeignKey(f => f.ProductId)
-            .OnDelete(DeleteBehavior.Restrict); ;
+        builder.Property(f => f.Comment)
+           .HasMaxLength(1000);
     }
 }
 

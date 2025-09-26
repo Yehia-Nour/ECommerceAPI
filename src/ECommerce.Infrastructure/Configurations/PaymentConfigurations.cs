@@ -8,10 +8,17 @@ public class PaymentConfigurations : IEntityTypeConfiguration<Payment>
 {
     public void Configure(EntityTypeBuilder<Payment> builder)
     {
-        builder.HasOne(p => p.Refund)
-            .WithOne(r => r.Payment)
-            .HasForeignKey<Refund>(r => r.PaymentId)
-            .OnDelete(DeleteBehavior.Restrict);
+        builder.Property(p => p.PaymentMethod)
+            .HasMaxLength(50);
+
+        builder.Property(p => p.TransactionId)
+            .HasMaxLength(50);
+
+        builder.Property(p => p.Status)
+            .HasMaxLength(20);
+
+        builder.Property(p => p.Amount)
+            .HasColumnType("decimal(18,2)");
     }
 }
 
