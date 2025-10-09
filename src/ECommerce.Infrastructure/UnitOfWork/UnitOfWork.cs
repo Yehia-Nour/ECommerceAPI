@@ -22,21 +22,34 @@ namespace ECommerce.Infrastructure.UnitOfWork
         public IRefundRepository Refunds { get; }
         public IFeedbackRepository Feedbacks { get; }
 
-        public UnitOfWork(ApplicationDbContext context)
+        public UnitOfWork(
+            ApplicationDbContext context,
+            ICustomerRepository customers,
+            IAddressRepository addresses,
+            ICategoryRepository categories,
+            IProductRepository products,
+            ICartRepository carts,
+            ICartItemRepository cartItems,
+            IOrderRepository orders,
+            IPaymentRepository payments,
+            ICancellationRepository cancellations,
+            IOrderItemRepository orderItems,
+            IRefundRepository refunds,
+            IFeedbackRepository feedbacks)
         {
             _context = context;
-            Customers = new CustomerRepository(_context);
-            Addresses = new AddressRepository(_context);
-            Categories = new CategoryRepository(_context);
-            Products = new ProductRepository(_context);
-            Carts = new CartRepository(_context);
-            CartItems = new CartItemRepository(_context);
-            Orders = new OrderRepository(_context);
-            Payments = new PaymentRepository(_context);
-            Cancellations = new CancellationRepository(_context);
-            OrderItems = new OrderItemRepository(_context);
-            Refunds = new RefundRepository(_context);
-            Feedbacks = new FeedbackRepository(_context);
+            Customers = customers;
+            Addresses = addresses;
+            Categories = categories;
+            Products = products;
+            Carts = carts;
+            CartItems = cartItems;
+            Orders = orders;
+            Payments = payments;
+            Cancellations = cancellations;
+            OrderItems = orderItems;
+            Refunds = refunds;
+            Feedbacks = feedbacks;
         }
 
         public async Task<int> SaveChangesAsync()

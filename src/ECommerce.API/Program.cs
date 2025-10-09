@@ -44,38 +44,37 @@ public class Program
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("EFCoreDBConnection")));
 
+
+        builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+        builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+        builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+        builder.Services.AddScoped<IProductRepository, ProductRepository>();
+        builder.Services.AddScoped<ICartRepository, CartRepository>();
+        builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+        builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+        builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+        builder.Services.AddScoped<ICancellationRepository, CancellationRepository>();
+        builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+        builder.Services.AddScoped<IRefundRepository, RefundRepository>();
+        builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+
         builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
         builder.Services.AddScoped<ICustomerService, CustomerService>();
-
         builder.Services.AddScoped<IAddressService, AddressService>();
-
         builder.Services.AddScoped<ICategoryService, CategoryService>();
-
         builder.Services.AddScoped<IProductService, ProductService>();
-
         builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
-
         builder.Services.AddScoped<IOrderService, OrderService>();
-
         builder.Services.AddScoped<IEmailService, EmailService>();
-
         builder.Services.AddScoped<IEmailTemplateService, EmailTemplateService>();
-
         builder.Services.AddScoped<IPaymentService, PaymentService>();
-
         builder.Services.AddScoped<ICancellationService, CancellationService>();
-
         builder.Services.AddScoped<IRefundService, RefundService>();
-
         builder.Services.AddScoped<IFeedbackService, FeedbackService>();
-
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
         builder.Services.AddScoped<IAuthService, AuthService>();
-
         builder.Services.AddScoped<IJwtService, JwtService>();
-
         builder.Services.AddHostedService<PendingPaymentService>();
 
 
